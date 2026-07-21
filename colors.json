@@ -1,0 +1,269 @@
+{
+  "rainbow": ["#E50000", "#FF8D00", "#FFEE00", "#028121", "#004CFF", "#770088"],
+  "transgender": ["#55CDFD", "#F6AAB7", "#FFFFFF", "#F6AAB7", "#55CDFD"],
+  "nonbinary": ["#FCF431", "#FCFCFC", "#9D59D2", "#282828"],
+  "xenogender": {
+    "colors": ["#FF6692", "#FF9A98", "#FFB883", "#FBFFA8", "#85BCFF", "#9D85FF", "#A510FF"],
+    "comment": "xenogender sourced from https://commons.wikimedia.org/wiki/File:Xenogender_pride_flag.svg"
+  },
+  "agender": ["#000000", "#BABABA", "#FFFFFF", "#BAF484", "#FFFFFF", "#BABABA", "#000000"],
+  "queer": ["#B57FDD", "#FFFFFF", "#49821E"],
+  "genderfluid": ["#FE76A2", "#FFFFFF", "#BF12D7", "#000000", "#303CBE"],
+  "bisexual": ["#D60270", "#9B4F96", "#0038A8"],
+  "pansexual": ["#FF1C8D", "#FFD700", "#1AB3FF"],
+  "polysexual": ["#F714BA", "#01D66A", "#1594F6"],
+  "omnisexual": {
+    "colors": ["#FE9ACE", "#FF53BF", "#200044", "#6760FE", "#8EA6FF"],
+    "comment": "omnisexual sorced from https://www.flagcolorcodes.com/omnisexual"
+  },
+  "omniromantic": ["#FEC8E4", "#FDA1DB", "#89739A", "#ABA7FE", "#BFCEFF"],
+  "gay-men": {
+    "colors": ["#078D70", "#98E8C1", "#FFFFFF", "#7BADE2", "#3D1A78"],
+    "comment": "gay men sourced from https://www.flagcolorcodes.com/gay-men"
+  },
+  "lesbian": ["#D62800", "#FF9B56", "#FFFFFF", "#D462A6", "#A40062"],
+  "abrosexual": {
+    "colors": ["#46D294", "#A3E9CA", "#FFFFFF", "#F78BB3", "#EE1766"],
+    "comment": "abrosexual used colorpicker to source from https://fyeahaltpride.tumblr.com/post/151704251345/could-you-guys-possibly-make-an-abrosexual-pride"
+  },
+  "asexual": ["#000000", "#A4A4A4", "#FFFFFF", "#810081"],
+  "aromantic": ["#3BA740", "#A8D47A", "#FFFFFF", "#ABABAB", "#000000"],
+  "fictosexual": {
+    "colors": ["#000000", "#C4C4C4", "#A349A5", "#C4C4C4", "#000000"],
+    "comment": "https://orientation.fandom.com/wiki/Fictosexual"
+  },
+  "aroace1": {
+    "colors": ["#E28C00", "#ECCD00", "#FFFFFF", "#62AEDC", "#203856"],
+    "comment": "aroace1 sourced from https://flag.library.lgbt/flags/aroace/"
+  },
+  "aroace2": ["#000000", "#810081", "#A4A4A4", "#FFFFFF", "#A8D47A", "#3BA740"],
+  "aroace3": ["#3BA740", "#A8D47A", "#FFFFFF", "#ABABAB", "#000000", "#A4A4A4", "#FFFFFF", "#810081"],
+  "demisexual": {
+    "colors": ["#000000", "#FFFFFF", "#6F0071", "#D3D3D3"],
+    "weights": [2, 3, 1, 3],
+    "comment": "sourced from https://commons.wikimedia.org/wiki/File:Demisexual_Pride_Flag.svg"
+  },
+  "autosexual": ["#99D9EA", "#7F7F7F"],
+  "intergender": {
+    "colors": ["#900DC2", "#900DC2", "#FFE54F", "#900DC2", "#900DC2"],
+    "comment": "todo: use weighted spacing"
+  },
+  "greygender": ["#B3B3B3", "#B3B3B3", "#FFFFFF", "#062383", "#062383", "#FFFFFF", "#535353", "#535353"],
+  "akiosexual": ["#F9485E", "#FEA06A", "#FEF44C", "#FFFFFF", "#000000"],
+  "bigender": {
+    "colors": ["#C479A2", "#EDA5CD", "#D6C7E8", "#FFFFFF", "#D6C7E8", "#9AC7E8", "#6D82D1"],
+    "comment": "bigender sourced from https://www.flagcolorcodes.com/bigender"
+  },
+  "demigender": {
+    "colors": ["#7F7F7F", "#C4C4C4", "#FBFF75", "#FFFFFF", "#FBFF75", "#C4C4C4", "#7F7F7F"],
+    "comment": "demigender yellow sourced from https://lgbtqia.fandom.com/f/p/4400000000000041031 other colors sourced from demiboy and demigirl flags"
+  },
+  "demiboy": {
+    "colors": ["#7F7F7F", "#C4C4C4", "#9DD7EA", "#FFFFFF", "#9DD7EA", "#C4C4C4", "#7F7F7F"],
+    "comment": "demiboy sourced from https://www.flagcolorcodes.com/demiboy"
+  },
+  "demigirl": {
+    "colors": ["#7F7F7F", "#C4C4C4", "#FDADC8", "#FFFFFF", "#FDADC8", "#C4C4C4", "#7F7F7F"],
+    "comment": "demigirl sourced from https://www.flagcolorcodes.com/demigirl"
+  },
+  "transmasculine": ["#FF8ABD", "#CDF5FE", "#9AEBFF", "#74DFFF", "#9AEBFF", "#CDF5FE", "#FF8ABD"],
+  "transfeminine": {
+    "colors": ["#73DEFF", "#FFE2EE", "#FFB5D6", "#FF8DC0", "#FFB5D6", "#FFE2EE", "#73DEFF"],
+    "comment": "transfeminine used colorpicker to source from https://www.deviantart.com/pride-flags/art/Trans-Woman-Transfeminine-1-543925985 linked from https://gender.fandom.com/wiki/Transfeminine"
+  },
+  "genderfaun": {
+    "colors": ["#FCD689", "#FFF09B", "#FAF9CD", "#FFFFFF", "#8EDED9", "#8CACDE", "#9782EC"],
+    "comment": "genderfaun sourced from https://www.flagcolorcodes.com/genderfaun"
+  },
+  "demifaun": ["#7F7F7F", "#7F7F7F", "#C6C6C6", "#C6C6C6", "#FCC688", "#FFF19C", "#FFFFFF", "#8DE0D5", "#9682EC", "#C6C6C6", "#C6C6C6", "#7F7F7F", "#7F7F7F"],
+  "genderfae": {
+    "colors": ["#97C3A5", "#C3DEAE", "#F9FACD", "#FFFFFF", "#FCA2C4", "#DB8AE4", "#A97EDD"],
+    "comment": "genderfae sourced from https://www.flagcolorcodes.com/genderfae"
+  },
+  "demifae": {
+    "colors": ["#7F7F7F", "#7F7F7F", "#C5C5C5", "#C5C5C5", "#97C3A4", "#C4DEAE", "#FFFFFF", "#FCA2C5", "#AB7EDF", "#C5C5C5", "#C5C5C5", "#7F7F7F", "#7F7F7F"],
+    "comment": "demifae used colorpicker to source form https://www.deviantart.com/pride-flags/art/Demifae-870194777"
+  },
+  "neutrois": ["#FFFFFF", "#1F9F00", "#000000"],
+  "biromantic1": ["#8869A5", "#D8A7D8", "#FFFFFF", "#FDB18D", "#151638"],
+  "biromantic2": ["#740194", "#AEB1AA", "#FFFFFF", "#AEB1AA", "#740194"],
+  "autoromantic": {
+    "colors": ["#99D9EA", "#99D9EA", "#3DA542", "#7F7F7F", "#7F7F7F"],
+    "comment": "symbol interpreted"
+  },
+  "boyflux2": {
+    "colors": ["#E48AE4", "#9A81B4", "#55BFAB", "#FFFFFF", "#A8A8A8", "#81D5EF", "#69ABE5", "#5276D4"],
+    "weights": [1, 1, 1, 1, 1, 5, 5, 5]
+  },
+  "girlflux": {
+    "colors": ["#F9E6D7", "#F2526C", "#BF0311", "#E9C587", "#BF0311", "#F2526C", "#F9E6D7"],
+    "comment": "sourced from https://commons.wikimedia.org/wiki/File:Girlflux_Pride_Flag.jpg"
+  },
+  "genderflux": {
+    "colors": ["#F47694", "#F2A2B9", "#CECECE", "#7CE0F7", "#3ECDF9", "#FFF48D"],
+    "comment": "sourced from https://www.deviantart.com/pride-flags/art/Genderflux-1-543925589"
+  },
+  "nullflux": {
+    "colors": ["#0B0C0E", "#A28DB9", "#E1D4EF", "#F0E6DD", "#665858"],
+    "comment": "https://lgbtqia.wiki/wiki/Gendernull"
+  },
+  "hypergender": ["#EFEFEF", "#FFFFFF", "#FBFF75", "#000000", "#FBFF75", "#FFFFFF", "#EFEFEF"],
+  "hyperboy": ["#EFEFEF", "#FFFFFF", "#74D7FE", "#000000", "#74D7FE", "#FFFFFF", "#EFEFEF"],
+  "hypergirl": ["#EFEFEF", "#FFFFFF", "#FC76D3", "#000000", "#FC76D3", "#FFFFFF", "#EFEFEF"],
+  "hyperandrogyne": ["#EFEFEF", "#FFFFFF", "#BB83FF", "#000000", "#BB83FF", "#FFFFFF", "#EFEFEF"],
+  "hyperneutrois": ["#EFEFEF", "#FFFFFF", "#BAFA74", "#000000", "#BAFA74", "#FFFFFF", "#EFEFEF"],
+  "finsexual": ["#B18EDF", "#D7B1E2", "#F7CDE9", "#F39FCE", "#EA7BB3"],
+  "unlabeled1": ["#EAF8E4", "#FDFDFB", "#E1EFF7", "#F4E2C4"],
+  "unlabeled2": ["#250548", "#FFFFFF", "#F7DCDA", "#EC9BEE", "#9541FA", "#7D2557"],
+  "pangender": ["#FFF798", "#FEDDCD", "#FFEBFB", "#FFFFFF", "#FFEBFB", "#FEDDCD", "#FFF798"],
+  "pangender.contrast": ["#FFE87F", "#FCBAA6", "#FBC9F3", "#FFFFFF", "#FBC9F3", "#FCBAA6", "#FFE87F"],
+  "gendernonconforming1": {
+    "colors": ["#50284D", "#96467B", "#5C96F7", "#FFE6F7", "#5C96F7", "#96467B", "#50284D"],
+    "weights": [4, 1, 1, 1, 1, 1, 4]
+  },
+  "gendernonconforming2": ["#50284D", "#96467B", "#5C96F7", "#FFE6F7", "#5C96F7", "#96467B", "#50284D"],
+  "femboy": ["#D260A5", "#E4AFCD", "#FEFEFE", "#57CEF8", "#FEFEFE", "#E4AFCD", "#D260A5"],
+  "tomboy": ["#2F3FB9", "#613A03", "#FEFEFE", "#F1A9B7", "#FEFEFE", "#613A03", "#2F3FB9"],
+  "gynesexual": ["#F4A9B7", "#903F2B", "#5B953B"],
+  "androsexual": ["#01CCFF", "#603524", "#B799DE"],
+  "gendervoid": {
+    "colors": ["#081149", "#4B484B", "#000000", "#4B484B", "#081149"],
+    "comment": "gendervoid and related flags sourced from: https://gender.fandom.com/wiki/Gendervoid"
+  },
+  "voidgirl": ["#180827", "#7A5A8B", "#E09BED", "#7A5A8B", "#180827"],
+  "voidboy": ["#0B130C", "#547655", "#66B969", "#547655", "#0B130C"],
+  "nonhuman-unity": {
+    "colors": ["#177B49", "#FFFFFF", "#593C90"],
+    "comment": "used https://twitter.com/foxbrained/status/1667621855518236674/photo/1 as source and colorpicked"
+  },
+  "plural": {
+    "colors": ["#2D0625", "#543475", "#7675C3", "#89C7B0", "#F3EDBD"],
+    "comment": "used https://pluralpedia.org/w/Plurality#/media/File:Plural-Flag-1.jpg as source and colorpicked"
+  },
+  "fraysexual": {
+    "colors": ["#226CB5", "#94E7DD", "#FFFFFF", "#636363"],
+    "comment": "sampled from https://es.m.wikipedia.org/wiki/Archivo:Fraysexual_flag.jpg"
+  },
+  "bear": {
+    "colors": ["#623804", "#D56300", "#FEDD63", "#FEE6B8", "#FFFFFF", "#555555"],
+    "comment": "sourced from https://commons.wikimedia.org/wiki/File:Bear_Brotherhood_flag.svg"
+  },
+  "butch": {
+    "colors": ["#D72800", "#F17623", "#FF9C56", "#FFFDF6", "#FFCE89", "#FEAF02", "#A37000"],
+    "comment": "colorpicked from https://commons.wikimedia.org/wiki/File:Butch_Flag.png"
+  },
+  "femme" : {
+    "colors": ["#FF1A87", "#FF6AB1", "#FFFFFF", "#9A0731", "51091D"],
+    "comment": "colorpicked from https://lgbtqia.wiki/wiki/Femme"
+  },
+  "leather": {
+    "colors": ["#000000", "#252580", "#000000", "#252580", "#FFFFFF", "#252580", "#000000", "#252580", "#000000"],
+    "comment": "colorpicked from https://commons.wikimedia.org/wiki/File:Leather,_Latex,_and_BDSM_pride_-_Light.svg"
+  },
+  "twink": {
+    "colors": ["#FFB2FF", "#FFFFFF", "#FFFF81"],
+    "comment": "colorpicked from https://commons.wikimedia.org/wiki/File:Twink_Pride_Flag_(proposed).svg"
+  },
+  "adipophilia": {
+    "colors": ["#000000", "#E16180", "#FFF9BE", "#603E41", "#000000"],
+    "comment": "https://en.wikipedia.org/wiki/File:FatFetishFlag.png"
+  },
+  "kenochoric": ["#000000", "#2E1569", "#824DB7", "#C7A1D6"],
+  "veldian": ["#D182A8", "#FAF6E0", "#69ACBE", "#5D448F", "#3A113E"],
+  "solian": ["#FFF8ED", "#FFE7A8", "#F1B870", "#A56058", "#46281E"],
+  "lunian": ["#2F0E62", "#6F41B1", "#889FDF", "#7DDFD5", "#D2F2E2"],
+  "polyam": {
+    "colors": ["#FFFFFF", "#FCBF00", "#009FE3", "#E50051", "#340C46"],
+    "comment": "polyamorous flag colors pulled from https://polyamproud.com/flag"
+  },
+  "sapphic": ["#FD8BA8", "#FBF2FF", "#C76BC5", "#FDD768", "#C76BC5", "#FBF2FF", "#FD8BA8"],
+  "androgyne": ["#FE007F", "#9832FF", "#00B8E7"],
+  "interprogress": ["#FFD800", "#7902AA", "#FFFFFF", "#FFAFC8", "#74D7EE", "#613915", "#000000", "#E50000", "#FF8D00", "#FFEE00", "#028121", "#004CFF", "#770088"],
+  "progress": ["#FFFFFF", "#FFAFC8", "#74D7EE", "#613915", "#000000", "#E50000", "#FF8D00", "#FFEE00", "#028121", "#004CFF", "#770088"],
+  "intersex": ["#FFD800", "#FFD800", "#7902AA", "#FFD800", "#FFD800"],
+  "old-polyam": ["#0000FF", "#FF0000", "#FFFF00", "#FF0000", "#000000"],
+  "equal-rights": ["#0000FF", "#0000FF", "#FFFF00", "#0000FF", "#0000FF", "#FFFF00", "#0000FF", "#0000FF"],
+  "drag": ["#CC67FF", "#FFFFFF", "#FFA3E3", "#FFFFFF", "#3366FF"],
+  "pronounfluid": ["#FFB3F9", "#FFFFFF", "#D1FDCB", "#C7B0FF", "#000000", "#B8CCFF"],
+  "pronounflux": ["#FDB3F8", "#B6CCFA", "#18DDD3", "#64FF89", "#FF7690", "#FFFFFF"],
+  "exipronoun": ["#1C3D34", "#FFFFFF", "#321848", "#000000"],
+  "neopronoun": ["#BCEC64", "#FFFFFF", "#38077A"],
+  "neofluid": ["#FFECA0", "#FFFFFF", "#FFECA0", "#38087A", "#BCEC64"],
+  "genderqueer": ["#B57EDC", "#B57EDC", "#FFFFFF", "#FFFFFF", "#4A8123", "#4A8123"],
+  "cisgender": ["#D70270", "#0038A7"],
+  "baker": {
+    "colors": ["#F23D9E", "#F80A24", "#F78022", "#F9E81F", "#1E972E", "#1B86BC", "#243897", "#6F0A82"],
+    "comment": "colors from Gilbert Baker's original 1978 flag design used https://gilbertbaker.com/rainbow-flag-color-meanings/ as source and colorpicked"
+  },
+  "caninekin": {
+    "colors": ["#2D2822", "#543D25", "#9C754D", "#E8DAC2", "#CFAD8C", "#B77B55", "#954E31"],
+    "comment": "this is 4 all the dogs, from zombpawcoins on tumblr!"
+  },
+  "libragender": {
+    "colors": ["#000000", "#808080", "#92D8E9", "#FFF544", "#FFB0CA", "#808080", "#000000"],
+    "comment": "Sourced from https://lgbtqia.wiki/wiki/Libragender"
+  },
+  "librafeminine": {
+    "colors": ["#000000", "#A3A3A3", "#FFFFFF", "#C6568F", "#FFFFFF", "#A3A3A3", "#000000"],
+    "comment": "Sourced from https://lgbtqia.wiki/wiki/Librafeminine"
+  },
+  "libramasculine": {
+    "colors": ["#000000", "#A3A3A3", "#FFFFFF", "#56C5C5", "#FFFFFF", "#A3A3A3", "#000000"],
+    "comment": "Sourced from https://lgbtqia.wiki/wiki/Libramasculine"
+  },
+  "libraandrogyne": {
+    "colors": ["#000000", "#A3A3A3", "#FFFFFF", "#9186B1", "#FFFFFF", "#A3A3A3", "#000000"],
+    "comment": "Sourced from https://lgbtqia.wiki/wiki/Librandrogyne"
+  },
+  "libranonbinary": {
+    "colors": ["#000000", "#A3A3A3", "#FFFFFF", "#FFF987", "#FFFFFF", "#A3A3A3", "#000000"],
+    "comment": "Sourced from https://lgbtqia.wiki/wiki/Libranonbinary"
+  },
+  "fluidflux1": {
+    "colors": ["#FF115F", "#A34AA3", "#00A4E7", "#FFDF00", "#000000", "#FFED71", "#85DAFF", "#DBADDA", "#FE8DB1"],
+    "comment": "Sourced from https://gender.fandom.com/wiki/Fluidflux?file=FC90B24D-CA36-4FE2-A752-C9ABFC65E332.jpeg"
+  },
+  "fluidflux2": ["#C6D1D2", "#F47B9D", "#F09F9B", "#E3F09E", "#75EEEA", "#52D2ED", "#C6D1D2"],
+  "transbian": ["#03A3E6", "#F8B4CD","#FAFBF9", "#FA9C57", "#A80864"],
+  "autism":["#C94A49", "#DE7554", "#DBB667", "#6FA35D", "#2E7574", "#232828"],
+  "cenelian":["#FFE7B6", "#93554A", "#52203A", "#7E4A93", "#99AFD6"],
+  "transneutral":["#74DFFF", "#FFFDB3", "#FFFC75", "#FFF200", "#FFFC75", "#FFFDB3", "#FE8CBF"],
+  "enbian": {
+    "colors": ["#261F4F", "#37296B", "#3C307C", "#5141A5", "#6551B5", "#8670D1", "#AB89DD"],
+    "comment": "Sourced from https://lgbtqia.wiki/wiki/Enbian"
+  },
+  "paragender": {
+    "colors": ["#9C9C9C", "#FFFFFF", "#BDE4D7", "#63BFA1", "#F3EE94", "#63BFA1", "#BDE4D7", "#FFFFFF", "#9C9C9C"],
+    "weights": [4, 3, 3, 2, 1, 2, 3, 3, 4]
+  },
+  "paraboy": {
+    "colors": ["#9C9C9C", "#FFFFFF", "#E4CCEC", "#C48CD4", "#0809C3", "#C48CD4", "#E4CCEC", "#FFFFFF", "#9C9C9C"],
+    "weights": [4, 3, 3, 2, 1, 2, 3, 3, 4]
+  },
+  "paragirl": {
+    "colors": ["#9D9D9D", "#FFFFFF", "#FCCDBD", "#FC8D5C", "#FC1F4B", "#FC8D5C", "#FCCDBD", "#FFFFFF", "#9D9D9D"],
+    "weights": [4, 3, 3, 2, 1, 2, 3, 3, 4]
+  },
+  "paranonbinary": {
+    "colors": ["#9C9C9C", "#FCFCFC", "#FDE8BD", "#FCD25C", "#FB5A24", "#FCD25C", "#FDE8BD", "#FCFCFC", "#9C9C9C"],
+    "weights": [4, 3, 3, 2, 1, 2, 3, 3, 4]
+  },
+  "paragenderalt":["#9E9E9E", "#FFFFFF", "#68CAB0", "#FFEBAD", "#68CAB0", "#FFFFFF", "#9E9E9E"],
+  "paraboyalt":["#9E9E9E", "#FFFFFF", "#D190E5", "#4F2ECA", "#D190E5", "#FFFFFF", "#9E9E9E"],
+  "paragirlalt":["#9E9E9E", "#FFFFFF", "#FFA07F", "#F43C3A", "#FFA07F", "#FFFFFF", "#9E9E9E"],
+  "paranonbinaryalt":["#C9C9C9", "#F4F4F4", "#FFFCC0", "#FFB4EE", "#C267FF", "#8B4EFF"],
+  "cupiorose":["#A0A0A0", "#C7BFE8", "#FFFFFF", "#B6C1DC"],
+  "cupioromantic":["#FCAAA4", "#FDC6C1", "#FFFFFF", "#C9C0E7", "#A1A1A1"],
+  "cupiosexual":["#A0A0A0", "#C7BFE8", "#FFFFFF", "#FFB3DA"],
+  "queervillain": {
+    "colors": ["#662D91", "#8DC63F", "#F7941D", "#EC008C"],
+    "comment": "Sourced from https://distressedegg.fun/qvp"
+  },
+  "disability": {
+    "colors": ["#595959", "#CE717F", "#EFDD77", "#E8E8E8", "#7AC3E0", "#3CB07D","#595959"],
+    "comment": "Colorpicked from https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Visually_Safe_Disability_Pride_Flag.svg/1280px-Visually_Safe_Disability_Pride_Flag.svg.png"
+  },
+  "unlabeled": {
+    "colors": ["#E7F9E4", "#FFFFFF", "#DEF0F7", "#FAE2C3"]
+  }
+}
