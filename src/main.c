@@ -162,7 +162,22 @@ int main(int argc, char *argv[])
 
     cx->export = "utf8";
     cx->font = "ascii9";
-    cx->dir = FONTDIR;
+    {
+        cx->dir = FONTDIR;
+        /* Fall back to system font directory if FONTDIR doesn't exist */
+        char *testpath = malloc(strlen(cx->dir) + 20);
+        sprintf(testpath, "%s/%s.tlf", cx->dir, cx->font);
+        FILE *f = fopen(testpath, "r");
+        if(!f)
+        {
+            sprintf(testpath, "%s/%s.tlf", SYSTEMFONTDIR, cx->font);
+            f = fopen(testpath, "r");
+            if(f)
+                cx->dir = SYSTEMFONTDIR;
+        }
+        if(f) fclose(f);
+        free(testpath);
+    }
 
     cx->term_width = 80;
 
@@ -345,7 +360,7 @@ int main(int argc, char *argv[])
 }
 
 #define USAGE \
-    "Usage: toilet [ -hkostvSW ] [ -d fontdirectory ]\n" \
+    "Usage: pridelet [ -hkostvSW ] [ -d fontdirectory ]\n" \
     "              [ -f fontfile ] [ -F filter ] [ -w outputwidth ]\n" \
     "              [ -I infocode ] [ -E format ] [ message ]\n"
 
@@ -374,16 +389,10 @@ int main(int argc, char *argv[])
 static void version(void)
 {
     printf(
-    "TOIlet Copyright 2006 Sam Hocevar\n"
-    "Internet: <sam@hocevar.net> Version: %s, date: %s\n"
+    "pridelet -- a fork of TOIlet with pride flag colours\n"
+    "Version: %s, date: %s\n"
     "\n"
-    "TOIlet, along with the various TOIlet fonts and documentation, may be\n"
-    "freely copied and distributed.\n"
-    "\n"
-    "If you use TOIlet, please send an e-mail message to <sam@hocevar.net>.\n"
-    "\n"
-    "The latest version of TOIlet is available from the web site,\n"
-    "        http://libcaca.zoy.org/toilet.html\n"
+    "Based on TOIlet Copyright 2006 Sam Hocevar <sam@hocevar.net>\n"
     "\n"
     "%s", VERSION, DATE, USAGE);
 }

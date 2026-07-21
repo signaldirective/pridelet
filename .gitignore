@@ -18,9 +18,10 @@ libtool
 stamp-h1
 autom4te.cache
 .auto/
-src/toilet
+src/pridelet
 src/.deps/
 tools/.deps/
 tools/caca2tlf
+doc/pridelet.1
 doc/toilet.1
 test-suite.log

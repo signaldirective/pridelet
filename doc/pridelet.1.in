@@ -1,8 +1,8 @@
-.TH toilet 1 "2006-11-10" "libcaca @PACKAGE_VERSION@"
+.TH pridelet 1 "2026-07-21" "pridelet @PACKAGE_VERSION@"
 .SH NAME
-TOIlet \- display large colourful characters
+pridelet \- display large colourful characters with pride flag colours
 .SH SYNOPSIS
-.B toilet
+.B pridelet
 [
 .B \-hkostvSW
 ] [
@@ -33,18 +33,20 @@ TOIlet \- display large colourful characters
 .I format
 ] [
 .I message
+] [
+.B \-\-rainbow\fR|\fB\-\-gay\fR|\fB\-\-transgender
 ]
 .RI
 .SH DESCRIPTION
-.B TOIlet
+.B pridelet
 prints text using large characters made of smaller characters. It is similar
 in many ways to
 .B FIGlet
-with additional features such as Unicode handling, colour fonts, filters
-and various export formats.
+with additional features such as Unicode handling, colour fonts, filters,
+pride flag colour palettes and various export formats.
 .RI
 .SH USAGE
-.B TOIlet
+.B pridelet
 either reads its input from the command line or from the standard input.
 .RI
 .SH OPTIONS
@@ -82,7 +84,7 @@ forces overlapping, or does nothing if the glyph only has one subcharacter.
 .TP
 .B \-w, \-\-width <width>
 Set the output width. By default,
-.B TOIlet
+.B pridelet
 will wrap its output at 80 character columns.
 .TP
 .B \-t, \-\-termwidth
@@ -119,7 +121,7 @@ be applied in order of appearance.
 .B \-\-irc, \-\-html
 .PD
 Specify the output format. By default,
-.B TOIlet
+.B pridelet
 will output UTF-8 text using ANSI colour codes suitable for most terminals
 such as XTerm or rxvt.
 .I <format>
@@ -149,19 +151,21 @@ manpage for more information about it.
 Output version information and exit.
 .RI
 .SH EXAMPLES
-toilet Hello World
+pridelet Hello World
 
-toilet Hello | toilet
+pridelet --rainbow Hello World
 
-tail -f /var/log/messages | toilet -f term --rainbow
+pridelet --gay "Love is Love"
+
+tail -f /var/log/messages | pridelet -f term --rainbow
 .RI
 .SH BUGS
 .B FIGlet
 compatibility is not complete yet.
 .RI
 .SH AUTHOR
-.B TOIlet
-and this manual page were written by Sam Hocevar <sam@hocevar.net>. There is a
-webpage available at http://caca.zoy.org/wiki/toilet .
+.B pridelet
+is a fork of TOIlet by Sam Hocevar <sam@hocevar.net>. There is a
+webpage available at https://signaldirective.github.io .
 .SH SEE ALSO
 figlet(6)

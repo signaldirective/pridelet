@@ -1,6 +1,6 @@
 # pridelet
 
-A fork of [TOIlet](http://libcaca.zoy.org/toilet.html) that renders text using FIGlet fonts with pride flag colours.
+A fork of [TOIlet](http://libcaca.zoy.org/toilet.html) that renders text using FIGlet fonts with pride flag colours. This is the pridelet version.
 
 ![preview](preview.png)
 
@@ -22,25 +22,25 @@ sudo make install
 To build without installing, run from the project root:
 
 ```sh
-./src/toilet -d fonts [options] "text"
+./src/pridelet -d fonts [options] "text"
 ```
 
 ## Usage
 
 ```sh
-toilet [option...] [message]
+pridelet [option...] [message]
 ```
 
 Read from stdin:
 
 ```sh
-echo "Hello World" | toilet --rainbow
+echo "Hello World" | pridelet --rainbow
 ```
 
 Pass text as arguments:
 
 ```sh
-toilet --gay "pridelet"
+pridelet --gay "pridelet"
 ```
 
 ### Flag colour options
@@ -71,18 +71,18 @@ toilet --gay "pridelet"
 
 ```sh
 # Rainbow flag
-toilet --rainbow "Hello World"
+pridelet --rainbow "Hello World"
 
 # Gay men pride flag
-toilet --gay "Love is Love"
+pridelet --gay "Love is Love"
 
 # Any flag from colors.json
-toilet --flag bisexual "Pride"
-toilet --flag lesbian "Pride"
-toilet --flag pansexual "Pride"
+pridelet --flag bisexual "Pride"
+pridelet --flag lesbian "Pride"
+pridelet --flag pansexual "Pride"
 
 # Combine with filters
-toilet --rainbow -F border "Welcome"
+pridelet --rainbow -F border "Welcome"
 ```
 
 ## Adding flags
