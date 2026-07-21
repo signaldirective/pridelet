@@ -52,6 +52,8 @@ pridelet --gay "pridelet"
 | `--transgender` | Transgender pride flag |
 | `--flag <name>` | Any flag from `colors.json` |
 | `--flag list` | List all available flags |
+| `--word-wrap` | Wrap output at word boundaries |
+| `--justify <mode>` | Justify text: `left`, `center`, or `right` |
 
 ### Other options
 
@@ -83,6 +85,10 @@ pridelet --flag pansexual "Pride"
 
 # Combine with filters
 pridelet --rainbow -F border "Welcome"
+
+# Word wrapping and justification
+pridelet --word-wrap --justify center "Long text that needs word wrapping"
+pridelet --word-wrap --justify right -w 60 "Right aligned and wrapped"
 ```
 
 ## Adding flags

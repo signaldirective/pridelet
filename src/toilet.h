@@ -42,6 +42,10 @@ struct toilet_context
     /* Pride flag palette (ARGB4444) */
     uint16_t const *pride_palette;
     unsigned int pride_ncolors;
+
+    /* Word wrap and justification */
+    int wordwrap;
+    char const *justify;
 };
 
 typedef struct toilet_context context_t;

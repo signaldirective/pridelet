@@ -171,6 +171,9 @@ int main(int argc, char *argv[])
     cx->filters = NULL;
     cx->nfilters = 0;
 
+    cx->wordwrap = 0;
+    cx->justify = NULL;
+
     /* Load pride flag colours from colors.json */
     {
         char const *flagpaths[] =
@@ -200,6 +203,8 @@ int main(int argc, char *argv[])
             { "rainbow", 0, NULL, 132 },
             { "flag", 1, NULL, 133 },
             { "transgender", 0, NULL, 134 },
+            { "word-wrap", 0, NULL, 135 },
+            { "justify", 1, NULL, 136 },
             { "export", 1, NULL, 'E' },
             { "irc", 0, NULL, 140 },
             { "html", 0, NULL, 141 },
@@ -254,6 +259,19 @@ int main(int argc, char *argv[])
             break;
         case 134: /* --transgender */
             set_flag(cx, "transgender");
+            break;
+        case 135: /* --word-wrap */
+            cx->wordwrap = 1;
+            break;
+        case 136: /* --justify */
+            if(strcmp(caca_optarg, "left") && strcmp(caca_optarg, "center")
+               && strcmp(caca_optarg, "right"))
+            {
+                fprintf(stderr, "unknown justification `%s' "
+                        "(use left, center, or right)\n", caca_optarg);
+                return -1;
+            }
+            cx->justify = caca_optarg;
             break;
         case 'w': /* --width */
             cx->term_width = atoi(caca_optarg);
@@ -362,6 +380,8 @@ int main(int argc, char *argv[])
     "      --gay                use gay men pride flag colours\n" \
     "      --transgender        use transgender pride flag colours\n" \
     "      --flag <name>        use a pride flag from colors.json\n" \
+    "      --word-wrap          wrap output at word boundaries\n" \
+    "      --justify <mode>     justify text (left, center, right)\n" \
     "      --metal              metal filter (same as -F metal)\n" \
     "  -E, --export <format>    select export format\n" \
     "  -E, --export list        list available export formats\n" \
