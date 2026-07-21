@@ -162,22 +162,7 @@ int main(int argc, char *argv[])
 
     cx->export = "utf8";
     cx->font = "ascii9";
-    {
-        cx->dir = FONTDIR;
-        /* Fall back to system font directory if FONTDIR doesn't exist */
-        char *testpath = malloc(strlen(cx->dir) + 20);
-        sprintf(testpath, "%s/%s.tlf", cx->dir, cx->font);
-        FILE *f = fopen(testpath, "r");
-        if(!f)
-        {
-            sprintf(testpath, "%s/%s.tlf", SYSTEMFONTDIR, cx->font);
-            f = fopen(testpath, "r");
-            if(f)
-                cx->dir = SYSTEMFONTDIR;
-        }
-        if(f) fclose(f);
-        free(testpath);
-    }
+    cx->dir = FONTDIR;
 
     cx->term_width = 80;
 
