@@ -38,20 +38,33 @@ int init_figlet(context_t *cx)
 {
     char path[2048];
 
-    snprintf(path, 2047, "%s/%s", cx->dir, cx->font);
-    if(caca_canvas_set_figfont(cx->cv, path))
+    /* If the font name is an absolute path, try it directly first */
+    if(cx->font[0] == '/')
     {
-        snprintf(path, 2047, "./%s", cx->font);
-        if(caca_canvas_set_figfont(cx->cv, path))
-        {
-            snprintf(path, 2047, SYSTEMFONTDIR "/%s", cx->font);
-            if(caca_canvas_set_figfont(cx->cv, path))
-            {
-                fprintf(stderr, "error: could not load font %s\n", cx->font);
-                return -1;
-            }
-        }
+        snprintf(path, 2047, "%s", cx->font);
+        if(!caca_canvas_set_figfont(cx->cv, path))
+            goto done;
     }
+
+    /* Try font directory */
+    snprintf(path, 2047, "%s/%s", cx->dir, cx->font);
+    if(!caca_canvas_set_figfont(cx->cv, path))
+        goto done;
+
+    /* Try current directory */
+    snprintf(path, 2047, "./%s", cx->font);
+    if(!caca_canvas_set_figfont(cx->cv, path))
+        goto done;
+
+    /* Try system font directory */
+    snprintf(path, 2047, SYSTEMFONTDIR "/%s", cx->font);
+    if(!caca_canvas_set_figfont(cx->cv, path))
+        goto done;
+
+    fprintf(stderr, "error: could not load font %s\n", cx->font);
+    return -1;
+
+done:
 
     caca_set_figfont_smush(cx->cv, cx->hmode);
     caca_set_figfont_width(cx->cv, cx->term_width);
