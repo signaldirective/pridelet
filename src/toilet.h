@@ -46,6 +46,18 @@ struct toilet_context
     /* Word wrap and justification */
     int wordwrap;
     char const *justify;
+
+    /* Paragraph mode */
+    int paragraph;
+
+    /* Control files */
+    char **controlfiles;
+    unsigned int ncontrolfiles;
+
+    /* Print direction and vertical smushing */
+    int rtl;
+    int vsmush;
+    int vsmush_rules;
 };
 
 typedef struct toilet_context context_t;

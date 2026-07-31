@@ -48,6 +48,8 @@ int render_stdin(context_t *cx)
     caca_canvas_t *cv;
     char *line;
     int i, len;
+    int paragraph_has_text = 0;
+    int is_blank_line;
 
     /* FIXME: we can't read longer lines */
     len = 1024;
@@ -60,18 +62,62 @@ int render_stdin(context_t *cx)
         if(!fgets(line, len, stdin))
             break;
 
-        caca_set_canvas_size(cv, 0, 0);
-        caca_import_canvas_from_memory(cv, line, strlen(line), "utf8");
-        for(i = 0; i < caca_get_canvas_width(cv); i++)
-        {
-            uint32_t ch = caca_get_char(cv, i, 0);
-            uint32_t at = caca_get_attr(cv, i, 0);
-            cx->feed(cx, ch, at);
-            if(caca_utf32_is_fullwidth(ch)) i++;
-        }
+        /* Strip trailing newline */
+        size_t l = strlen(line);
+        if(l > 0 && line[l - 1] == '\n')
+            line[l - 1] = '\0';
 
-        render_flush(cx);
+        /* Check if the line is blank (empty after stripping newline) */
+        is_blank_line = (line[0] == '\0');
+
+        if(cx->paragraph)
+        {
+            if(is_blank_line)
+            {
+                /* Blank line = paragraph break */
+                if(paragraph_has_text)
+                {
+                    render_flush(cx);
+                    paragraph_has_text = 0;
+                }
+            }
+            else
+            {
+                /* Separate words with a space */
+                if(paragraph_has_text)
+                    cx->feed(cx, ' ', 0);
+
+                caca_set_canvas_size(cv, 0, 0);
+                caca_import_canvas_from_memory(cv, line, strlen(line), "utf8");
+                for(i = 0; i < caca_get_canvas_width(cv); i++)
+                {
+                    uint32_t ch = caca_get_char(cv, i, 0);
+                    uint32_t at = caca_get_attr(cv, i, 0);
+                    cx->feed(cx, ch, at);
+                    if(caca_utf32_is_fullwidth(ch)) i++;
+                }
+                paragraph_has_text = 1;
+            }
+        }
+        else
+        {
+            /* Normal mode (original behavior) */
+            caca_set_canvas_size(cv, 0, 0);
+            caca_import_canvas_from_memory(cv, line, strlen(line), "utf8");
+            for(i = 0; i < caca_get_canvas_width(cv); i++)
+            {
+                uint32_t ch = caca_get_char(cv, i, 0);
+                uint32_t at = caca_get_attr(cv, i, 0);
+                cx->feed(cx, ch, at);
+                if(caca_utf32_is_fullwidth(ch)) i++;
+            }
+            render_flush(cx);
+        }
     }
+
+    /* Flush remaining paragraph on EOF */
+    if(cx->paragraph && paragraph_has_text)
+        render_flush(cx);
 
     free(line);
 
@@ -86,25 +132,25 @@ int render_list(context_t *cx, int argc, char *argv[])
 
     cv = caca_create_canvas(0, 0);
 
-    for(j = 0; j < argc; )
+    if(cx->paragraph)
     {
-        char *cr;
-
-        if(!parser)
+        /* Paragraph mode: join all argv with spaces,
+         * replace newlines with spaces, feed as one paragraph */
+        size_t total = 0;
+        for(j = 0; j < argc; j++)
+            total += strlen(argv[j]) + 1;
+        char *full = malloc(total + 1);
+        full[0] = '\0';
+        for(j = 0; j < argc; j++)
         {
-            if(j)
-                cx->feed(cx, ' ', 0);
-            parser = argv[j];
+            if(j > 0) strcat(full, " ");
+            strcat(full, argv[j]);
         }
-
-        cr = strchr(parser, '\n');
-        if(cr)
-            len = (cr - parser) + 1;
-        else
-            len = strlen(parser);
+        for(char *p = full; *p; p++)
+            if(*p == '\n') *p = ' ';
 
         caca_set_canvas_size(cv, 0, 0);
-        caca_import_canvas_from_memory(cv, parser, len, "utf8");
+        caca_import_canvas_from_memory(cv, full, strlen(full), "utf8");
         for(i = 0; i < caca_get_canvas_width(cv); i++)
         {
             uint32_t ch = caca_get_char(cv, i, 0);
@@ -112,20 +158,52 @@ int render_list(context_t *cx, int argc, char *argv[])
             cx->feed(cx, ch, at);
             if(caca_utf32_is_fullwidth(ch)) i++;
         }
-
-        if(cr)
-        {
-            parser += len;
-            render_flush(cx);
-        }
-        else
-        {
-            parser = NULL;
-            j++;
-        }
+        free(full);
+        render_flush(cx);
     }
+    else
+    {
+        for(j = 0; j < argc; )
+        {
+            char *cr;
 
-    render_flush(cx);
+            if(!parser)
+            {
+                if(j)
+                    cx->feed(cx, ' ', 0);
+                parser = argv[j];
+            }
+
+            cr = strchr(parser, '\n');
+            if(cr)
+                len = (cr - parser) + 1;
+            else
+                len = strlen(parser);
+
+            caca_set_canvas_size(cv, 0, 0);
+            caca_import_canvas_from_memory(cv, parser, len, "utf8");
+            for(i = 0; i < caca_get_canvas_width(cv); i++)
+            {
+                uint32_t ch = caca_get_char(cv, i, 0);
+                uint32_t at = caca_get_attr(cv, i, 0);
+                cx->feed(cx, ch, at);
+                if(caca_utf32_is_fullwidth(ch)) i++;
+            }
+
+            if(cr)
+            {
+                parser += len;
+                render_flush(cx);
+            }
+            else
+            {
+                parser = NULL;
+                j++;
+            }
+        }
+
+        render_flush(cx);
+    }
 
     caca_free_canvas(cv);
 

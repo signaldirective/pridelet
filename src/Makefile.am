@@ -5,6 +5,7 @@ pridelet_SOURCES = main.c toilet.h \
                  render.c render.h \
                  filter.c filter.h \
                  export.c export.h \
+                 control.c control.h \
                  term.c figlet.c
 
 pridelet_CPPFLAGS = -DFONTDIR=\"$(datadir)/figlet\" -DCOLORSDIR=\"$(abs_top_srcdir)\" -DSYSTEMFONTDIR=\"/usr/share/figlet\"

@@ -3,7 +3,7 @@
 ret=0
 
 #
-# Check that we have no tabs or trailing spaces in the source code
+# Check that all fonts can be loaded
 #
 nfails=0
 nfonts=0
@@ -13,7 +13,7 @@ for x in $(make -s echo-fonts -C ../fonts); do
    *) continue ;;
   esac
   nfonts=$(($nfonts + 1))
-  if ../src/toilet -d ../fonts -f "$x" Hello World >/dev/null; then
+  if ../src/pridelet -d ../fonts -f "$x" Hello World >/dev/null; then
     :
   else
     echo "Error loading font $x"

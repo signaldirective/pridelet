@@ -1,10 +1,10 @@
-.TH pridelet 1 "2026-07-21" "pridelet @PACKAGE_VERSION@"
+.TH pridelet 1 "2026-07-29" "pridelet @PACKAGE_VERSION@"
 .SH NAME
 pridelet \- display large colourful characters with pride flag colours
 .SH SYNOPSIS
 .B pridelet
 [
-.B \-hkostvSW
+.B \-hkmnpstvVWXLR
 ] [
 .B \-d
 .I fontdirectory
@@ -21,11 +21,17 @@ pridelet \- display large colourful characters with pride flag colours
 ] [
 .B \-w
 .I outputwidth
+] [
+.B \-m
+.I layoutmode
 ]
 .PD 0
 .IP
 .PD
 [
+.B \-C
+.I controlfile
+] [
 .B \-I
 .I infocode
 ] [
@@ -39,15 +45,19 @@ pridelet \- display large colourful characters with pride flag colours
 .RI
 .SH DESCRIPTION
 .B pridelet
-prints text using large characters made of smaller characters. It is similar
-in many ways to
-.B FIGlet
-with additional features such as Unicode handling, colour fonts, filters,
-pride flag colour palettes and various export formats.
+prints text using large characters made of smaller characters. It is a fork
+of
+.B TOIlet
+that adds pride flag colour palettes, and it implements features from the
+FIGlet specification that TOIlet never implemented: control files,
+right-to-left printing, vertical smushing, paragraph mode, layout modes and
+word wrapping.
 .RI
 .SH USAGE
 .B pridelet
 either reads its input from the command line or from the standard input.
+When text is given on the command line, the remaining arguments are joined
+with spaces. Otherwise the input is read from the standard input.
 .RI
 .SH OPTIONS
 .TP
@@ -58,8 +68,9 @@ or
 .B .tlf
 files stored in the
 .B @datarootdir@/figlet
-directory. Fonts are looked first in the font directory, then in the current
-directory. There is also a special built-in font called
+directory. Fonts are looked up first in the font directory, then in the
+current directory, then in the system font directory. There is also a
+special built-in font called
 .I term
 that serves as a fallback if no font is available.
 .TP
@@ -69,18 +80,63 @@ at build time and usually defaults to
 .B @datarootdir@/figlet.
 .TP
 .B \-s, \-S, \-k, \-W, \-o
-Select character composition rules.
+Select horizontal character composition rules.
+.B \-s
+(default behaviour) uses the font's smushing information if any, otherwise
+forces overlapping.
 .B \-S
-sets smushing (nicely merging glyphs),
+forces smushing.
 .B \-k
-sets kerning (rendering subcharacters as close to each other as possible),
+sets kerning (rendering subcharacters as close to each other as possible
+without smushing),
 .B \-W
 renders characters at their full width and
 .B \-o
 sets overlapping (glyphs slightly overlap the previous one).
-.B \-s
-(default behaviour) uses the font's smushing information if any, otherwise
-forces overlapping, or does nothing if the glyph only has one subcharacter.
+.TP
+.B \-m, \-\-layout <mode>
+Set an explicit layout mode, either by number or by name. This is the
+FIGlet-compatible way of selecting how adjacent FIGcharacters are spaced.
+The numeric modes are:
+.RS
+.TP 12
+.B \-1
+Default (use the font's own layout).
+.TP
+.B 0
+Full width (no spacing reduction).
+.TP
+.B 1
+Kerning.
+.TP
+.B 2
+Smushing.
+.TP
+.B \-2
+Force smushing.
+.RE
+.RS
+The named modes
+.B default,
+.B full
+(or
+.BR fullwidth ),
+.B kern
+(or
+.BR kerning ),
+.B smush
+and
+.B overlap
+are also accepted.
+.RE
+.TP
+.B \-V, \-\-vertical-smush
+Smush successive output lines together vertically. Without this option,
+only fonts that enable vertical smushing in their layout parameter use it.
+When a font defines vertical smushing rules, they are honoured; otherwise
+universal smushing (later sub-characters win) is used. Vertical smushing is
+applied to the lines produced when a paragraph or word-wrapped text wraps
+to more than one line.
 .TP
 .B \-w, \-\-width <width>
 Set the output width. By default,
@@ -90,12 +146,65 @@ will wrap its output at 80 character columns.
 .B \-t, \-\-termwidth
 Set the output width to the terminal width.
 .TP
+.B \-p, \-\-paragraph
+Put
+.B pridelet
+into paragraph mode. In this mode, line breaks within a paragraph are
+treated as blanks between words, and the text of each paragraph is
+reflowed to fit the output width. A blank line separates paragraphs.
+This is especially useful when piping a multi-line file through
+.BR pridelet .
+.TP
+.B \-n, \-\-normal
+Put
+.B pridelet
+back into normal mode (the default), in which every newline read produces
+a line break.
+.TP
+.B \-\-word-wrap
+Wrap the output at word boundaries so that no line is wider than the
+output width. This is implied by
+.B \-p.
+.TP
+.B \-\-justify <mode>
+Justify the output horizontally. The mode can be
+.BR left ,
+.B center
+or
+.BR right .
+.TP
+.B \-L, \-\-left-to-right
+Print the text left-to-right.
+.TP
+.B \-R, \-\-right-to-left
+Print the text right-to-left. The characters of each output line are laid
+out from right to left, as used for scripts such as Hebrew and Arabic.
+.TP
+.B \-X, \-\-default-direction
+Use the print direction stored in the font file. This is the default
+behaviour; fonts that do not specify a direction are printed left-to-right.
+.TP
+.B \-C, \-\-controlfile <file>
+Add a control file to the list of control files. Control files
+(
+.B .flc
+files) map input characters onto other characters, similar to the Unix
+.B tr
+command. The
+.B .flc
+suffix may be omitted. The file is looked up in the font directory and in
+the current directory. See the section CONTROL FILES below for the file
+format.
+.TP
+.B \-N, \-\-nocontrolfiles
+Clear the control file list, cancelling the effect of any previous
+.B \-C
+options.
+.TP
 .B \-F, \-\-filter <filters>
 .PD 0
 .TP
 .B \-F, \-\-filter list
-.TP
-.B \-\-rainbow, \-\-metal
 .PD
 Specify a list of filters to be applied to the output.
 .I <filters>
@@ -103,15 +212,31 @@ is a colon-separated list of filters such as
 .I crop:rotate:rainbow
 and the special argument
 .I list
-outputs a list of available filters.
-
-.B \-\-rainbow
-and
-.B \-\-metal
-are shortcuts to commonly used filters that are guaranteed to exist. Several
+outputs a list of available filters. Several
 .B \-F
-flags can also be specified on the command line, in which case filters will
-be applied in order of appearance.
+flags can be specified on the command line, in which case filters are
+applied in order of appearance.
+.TP
+.B \-\-rainbow,
+.B \-\-metal, \-\-gay, \-\-transgender, \-\-flag <name>
+Shorthand options for commonly used colour effects.
+.B \-\-rainbow,
+.B \-\-gay
+and
+.B \-\-transgender
+apply the corresponding pride flag palette, and
+.B \-\-flag
+applies any flag defined in
+.BR colors.json .
+.B \-\-flag list
+lists the available flags, and
+.B \-\-metal
+adds the metallic filter (same as
+.BR \-F\ metal ).
+The
+.B pride
+filter applies the currently selected pride flag palette, or the rainbow
+flag if no flag has been selected.
 .TP
 .B \-E, \-\-export <format>
 .PD 0
@@ -129,11 +254,11 @@ is the name of the export format as recognised by libcaca. The special
 argument
 .I list
 outputs a list of available export formats.
-
 .B \-\-irc
 and
 .B \-\-html
-are shortcuts to commonly used export formats that are guaranteed to exist.
+are shortcuts to commonly used export formats that are guaranteed to
+exist.
 .TP
 .B \-h, \-\-help
 Display a short help message and exit.
@@ -150,22 +275,200 @@ manpage for more information about it.
 .B \-v, \-\-version
 Output version information and exit.
 .RI
+.SH CONTROL FILES
+Control files are mapping tables used to translate input characters into
+font character codes, in the same way as the Unix
+.B tr
+command. They are typically used to support character sets other than
+Latin-1, for example the
+.B 8859-2
+through
+.B 8859-9
+files for ISO Latin character sets, the
+.B ilhebrew
+and
+.B ushebrew
+files for Hebrew, or the
+.B uskata
+and
+.B utf8
+files for katakana and Unicode.
+.PP
+A control file is a text file whose name ends in
+.BR .flc .
+Comment lines begin with
+.B #
+and are ignored, as are blank lines. The optional first line may be the
+signature
+.BR flc2a .
+Command lines have one of the following formats:
+.TP 12
+.BI t " inchar outchar"
+Translate the character
+.I inchar
+into the character
+.I outchar.
+.TP
+.BI t " inchar1-inchar2 outchar1-outchar2"
+Translate every character of the range
+.IR inchar1 \- inchar2
+into the corresponding character of the range
+.IR outchar1 \- outchar2.
+Both ranges must have the same size.
+.TP
+.BI number " number"
+A mapping table entry, equivalent to a
+.B t
+command of the first type. This form is provided for compatibility with
+the mapping tables issued by the Unicode Consortium.
+.TP
+.B f
+End the current transformation stage. A control file can contain several
+stages: each character is processed by every stage in turn, and within a
+stage only the first matching translation is used.
+.PP
+Characters may be given as Latin-1 characters representing their own
+codes, or as numeric codes preceded by a backslash, such as
+.B \e65
+or
+.B \e0x100
+(hexadecimal). The backslash escape sequences
+.BR \ea ,
+.BR \eb ,
+.BR \ee ,
+.BR \ef ,
+.BR \en ,
+.BR \er ,
+.BR \et ,
+.BR \ev ,
+.B \e\e
+and
+.B \e\ 
+(backslash followed by a space) are also understood.
+.PP
+For example, the following control file converts uppercase ASCII to
+lowercase:
+.PP
+.RS
+.nf
+.B flc2a
+.B t A-Z a-z
+.fi
+.RE
+.PP
+The commands
+.BR b ,
+.BR u ,
+.BR h ,
+.BR j ,
+.BR g
+and
+.BR s ,
+which in FIGlet control the encoding of the input bytes, are accepted and
+ignored, since
+.B pridelet
+always decodes its input as UTF-8.
+.RI
+.SH RIGHT-TO-LEFT PRINTING
+By default,
+.B pridelet
+prints text left-to-right, or according to the direction stored in the
+font file. The
+.B \-R
+option prints each line of output from right to left, so that the first
+character of each line appears on the right. This is useful with fonts
+that contain characters for right-to-left scripts, such as the
+.I ivrit
+font. Note that, like FIGlet,
+.B pridelet
+does not perform bidirectional text layout: with
+.B \-R
+everything is printed right-to-left.
+.RI
+.SH VERTICAL SMUSHING
+When a paragraph or word-wrapped text is longer than the output width, it
+is split over several lines of FIGcharacters. By default these lines are
+stacked at their full height. With
+.B \-V
+(or when the font's layout parameter enables vertical smushing), successive
+lines are moved together and overlap according to the vertical smushing
+rules defined by the font: equal character smushing, underscore smushing,
+hierarchy smushing, horizontal line smushing and vertical line
+supersmushing. If the font defines no vertical smushing rules, universal
+smushing is used, in which the sub-characters of the later line win.
+.RI
 .SH EXAMPLES
-pridelet Hello World
-
-pridelet --rainbow Hello World
-
-pridelet --gay "Love is Love"
-
-tail -f /var/log/messages | pridelet -f term --rainbow
+.TP
+.B pridelet Hello World
+Render "Hello World" using the default font and rainbow colours if
+configured.
+.TP
+.B pridelet --rainbow Hello World
+Render "Hello World" with the rainbow flag colours.
+.TP
+.B pridelet --gay "Love is Love"
+Render with the gay men pride flag colours.
+.TP
+.B pridelet -f big --flag bisexual "Pride"
+Render with the
+.I big
+font and the bisexual flag colours.
+.TP
+.B printf "This is a long paragraph\enthat will be reflowed.\en\enSecond paragraph.\en" | pridelet -p -V
+Render two paragraphs, reflowed to the output width and smushed
+vertically.
+.TP
+.B figlet -f slant -R shalom
+Render "shalom" right-to-left.
+.TP
+.B echo "ABC" | pridelet -R
+Render "ABC" so that the first character appears on the right.
+.TP
+.B pridelet -C 8859-2 -f standard < latin2.txt
+Interpret the input using the ISO Latin-2 character set by way of a
+control file.
+.TP
+.B pridelet -m 1 Hello
+Render "Hello" using kerning (same as
+.BR \-k ).
+.TP
+.B tail -f /var/log/messages | pridelet -f term --rainbow
+Stream the system log through pridelet with the
+.I term
+font.
+.RI
+.SH ENVIRONMENT
+.TP
+.B COLORSDIR
+Overrides the build-time directory where
+.B colors.json
+is looked up. The file is also looked up in the current directory.
+.RI
+.SH FILES
+.TP
+.I file.flf
+FIGlet font file.
+.TP
+.I file.tlf
+TOIlet font file.
+.TP
+.I file.flc
+FIGlet control file.
+.TP
+.I colors.json
+Pride flag colour definitions.
 .RI
 .SH BUGS
-.B FIGlet
-compatibility is not complete yet.
+Right-to-left printing does not perform bidirectional text layout.
+Vertical smushing is only applied between the lines of a single flush
+(that is, within a wrapped paragraph), not between separate input lines.
 .RI
 .SH AUTHOR
 .B pridelet
-is a fork of TOIlet by Sam Hocevar <sam@hocevar.net>. There is a
+is a fork of
+.B TOIlet
+by Sam Hocevar <sam@hocevar.net>. The FIGlet features implemented here
+follow the FIGfont specification by John Cowan and Paul Burton. There is a
 webpage available at https://signaldirective.github.io .
 .SH SEE ALSO
-figlet(6)
+figlet(6), toilet(1)

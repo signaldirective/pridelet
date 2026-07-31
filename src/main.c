@@ -32,6 +32,7 @@
 #include "render.h"
 #include "filter.h"
 #include "export.h"
+#include "control.h"
 
 #include <json-c/json.h>
 
@@ -150,8 +151,75 @@ static int set_flag(context_t *cx, const char *name)
     return -1;
 }
 
+/* Select the rainbow flag palette if no flag palette has been set yet.
+ * Used so that the "pride" filter works on its own. */
+static void pride_default(context_t *cx)
+{
+    if(cx->pride_palette)
+        return;
+    for(unsigned int i = 0; i < nflag_entries; i++)
+        if(!strcmp(flag_entries[i].name, "rainbow"))
+        {
+            cx->pride_palette = flag_entries[i].colors;
+            cx->pride_ncolors = flag_entries[i].ncolors;
+            return;
+        }
+}
+
+/* Check whether the "pride" filter appears in a colon-separated list
+ * of filter names. */
+static int has_pride_filter(char const *filters)
+{
+    for(;;)
+    {
+        while(*filters == ':')
+            filters++;
+        if(*filters == '\0')
+            return 0;
+        if(!strncmp(filters, "pride", 5) &&
+           (filters[5] == ':' || filters[5] == '\0'))
+            return 1;
+        while(*filters && *filters != ':')
+            filters++;
+    }
+}
+
 static void version(void);
 static void usage(void);
+
+static int controlfile_add(context_t *cx, const char *name)
+{
+    size_t len = strlen(name);
+    char *copy;
+
+    /* A trailing ".flc" suffix may be left off */
+    if(len > 4 && !strcasecmp(name + len - 4, ".flc"))
+        len -= 4;
+
+    copy = strndup(name, len);
+    if(!copy)
+        return -1;
+
+    cx->controlfiles = realloc(cx->controlfiles,
+                               (cx->ncontrolfiles + 1) * sizeof(char *));
+    if(!cx->controlfiles)
+    {
+        free(copy);
+        return -1;
+    }
+    cx->controlfiles[cx->ncontrolfiles++] = copy;
+
+    return 0;
+}
+
+static void controlfile_clear(context_t *cx)
+{
+    for(unsigned int i = 0; i < cx->ncontrolfiles; i++)
+        free(cx->controlfiles[i]);
+    free(cx->controlfiles);
+    cx->controlfiles = NULL;
+    cx->ncontrolfiles = 0;
+}
 
 int main(int argc, char *argv[])
 {
@@ -171,8 +239,19 @@ int main(int argc, char *argv[])
     cx->filters = NULL;
     cx->nfilters = 0;
 
+    cx->pride_palette = NULL;
+    cx->pride_ncolors = 0;
+
     cx->wordwrap = 0;
     cx->justify = NULL;
+    cx->paragraph = 0;
+
+    cx->controlfiles = NULL;
+    cx->ncontrolfiles = 0;
+
+    cx->rtl = -1;
+    cx->vsmush = 0;
+    cx->vsmush_rules = 0;
 
     /* Load pride flag colours from colors.json */
     {
@@ -205,6 +284,15 @@ int main(int argc, char *argv[])
             { "transgender", 0, NULL, 134 },
             { "word-wrap", 0, NULL, 135 },
             { "justify", 1, NULL, 136 },
+            { "normal", 0, NULL, 'n' },
+            { "paragraph", 0, NULL, 'p' },
+            { "layout", 1, NULL, 'm' },
+            { "controlfile", 1, NULL, 'C' },
+            { "nocontrolfiles", 0, NULL, 'N' },
+            { "left-to-right", 0, NULL, 'L' },
+            { "right-to-left", 0, NULL, 'R' },
+            { "default-direction", 0, NULL, 'X' },
+            { "vertical-smush", 0, NULL, 'V' },
             { "export", 1, NULL, 'E' },
             { "irc", 0, NULL, 140 },
             { "html", 0, NULL, 141 },
@@ -214,7 +302,7 @@ int main(int argc, char *argv[])
             { NULL, 0, NULL, 0 }
         };
 
-        int c = caca_getopt(argc, argv, "f:d:w:tsSkWoF:E:hI:v",
+        int c = caca_getopt(argc, argv, "f:d:w:tsSkWoF:E:hI:vm:C:NnpLRXV",
                             long_options, &option_index);
         if(c == -1)
             break;
@@ -239,6 +327,8 @@ int main(int argc, char *argv[])
         case 'F': /* --filter */
             if(!strcmp(caca_optarg, "list"))
                 return filter_list();
+            if(has_pride_filter(caca_optarg))
+                pride_default(cx);
             if(filter_add(cx, caca_optarg) < 0)
                 return -1;
             break;
@@ -303,6 +393,73 @@ int main(int argc, char *argv[])
         case 'o':
             cx->hmode = "overlap";
             break;
+        case 'm': /* --layout */
+        {
+            char *end = NULL;
+            int n = strtol(caca_optarg, &end, 10);
+            if(end && *end == '\0')
+            {
+                switch(n)
+                {
+                    case -1: cx->hmode = "default"; break;
+                    case 0:  cx->hmode = "none"; break;
+                    case 1:  cx->hmode = "kern"; break;
+                    case 2:
+                    case -2: cx->hmode = "smush"; break;
+                    default:
+                        fprintf(stderr, "unknown layout mode `%d'\n", n);
+                        return -1;
+                }
+            }
+            else
+            {
+                if(!strcmp(caca_optarg, "default"))
+                    cx->hmode = "default";
+                else if(!strcmp(caca_optarg, "full")
+                     || !strcmp(caca_optarg, "fullwidth"))
+                    cx->hmode = "none";
+                else if(!strcmp(caca_optarg, "kern")
+                     || !strcmp(caca_optarg, "kerning"))
+                    cx->hmode = "kern";
+                else if(!strcmp(caca_optarg, "smush"))
+                    cx->hmode = "smush";
+                else if(!strcmp(caca_optarg, "overlap"))
+                    cx->hmode = "overlap";
+                else
+                {
+                    fprintf(stderr, "unknown layout mode `%s'\n",
+                            caca_optarg);
+                    return -1;
+                }
+            }
+            break;
+        }
+        case 'n': /* --normal */
+            cx->paragraph = 0;
+            break;
+        case 'p': /* --paragraph */
+            cx->paragraph = 1;
+            cx->wordwrap = 1;
+            break;
+        case 'C': /* --controlfile */
+            if(controlfile_add(cx, caca_optarg) < 0)
+                return -1;
+            break;
+        case 'N': /* --nocontrolfiles */
+            controlfile_clear(cx);
+            break;
+        case 'L': /* --left-to-right */
+            cx->rtl = 0;
+            break;
+        case 'R': /* --right-to-left */
+            cx->rtl = 1;
+            break;
+        case 'X': /* --default-direction */
+            cx->rtl = -1;
+            break;
+        case 'V': /* --vertical-smush */
+            cx->vsmush = 1;
+            break;
         case 'E': /* --export */
             if(!strcmp(caca_optarg, "list"))
                 return export_list();
@@ -351,27 +508,33 @@ int main(int argc, char *argv[])
     if(render_init(cx) < 0)
         return -1;
 
+    if(control_init(cx) < 0)
+        return -1;
+
     if(caca_optind >= argc)
         render_stdin(cx);
     else
         render_list(cx, argc - caca_optind, argv + caca_optind);
 
     render_end(cx);
+    control_end(cx);
     filter_end(cx);
 
     return 0;
 }
 
 #define USAGE \
-    "Usage: pridelet [ -hkostvSW ] [ -d fontdirectory ]\n" \
+    "Usage: pridelet [ -hmnpstvSWXLRV ] [ -d fontdirectory ]\n" \
     "              [ -f fontfile ] [ -F filter ] [ -w outputwidth ]\n" \
-    "              [ -I infocode ] [ -E format ] [ message ]\n"
+    "              [ -C controlfile ] [ -I infocode ] [ -E format ] [ message ]\n"
 
 #define HELP \
     "  -f, --font <name>        select the font\n" \
     "  -d, --directory <dir>    specify font directory\n" \
     "  -s, -S, -k, -W, -o       render mode (default, force smushing,\n" \
     "                           kerning, full width, overlap)\n" \
+    "  -m, --layout <mode>      layout mode (number or name: -1 default,\n" \
+    "                           0 full, 1 kern, 2 smush, -2 force smush)\n" \
     "  -w, --width <width>      set output width\n" \
     "  -t, --termwidth          adapt to terminal's width\n" \
     "  -F, --filter <filters>   apply one or several filters to the text\n" \
@@ -380,8 +543,16 @@ int main(int argc, char *argv[])
     "      --gay                use gay men pride flag colours\n" \
     "      --transgender        use transgender pride flag colours\n" \
     "      --flag <name>        use a pride flag from colors.json\n" \
+    "  -p, --paragraph          paragraph mode (reflow text)\n" \
+    "  -n, --normal             normal mode (default, keep newlines)\n" \
     "      --word-wrap          wrap output at word boundaries\n" \
     "      --justify <mode>     justify text (left, center, right)\n" \
+    "  -C, --controlfile <file> add a control file (character mapping)\n" \
+    "  -N, --nocontrolfiles     clear the control file list\n" \
+    "  -L, --left-to-right      print text left-to-right\n" \
+    "  -R, --right-to-left      print text right-to-left\n" \
+    "  -X, --default-direction  use the font's print direction\n" \
+    "  -V, --vertical-smush     smush successive lines vertically\n" \
     "      --metal              metal filter (same as -F metal)\n" \
     "  -E, --export <format>    select export format\n" \
     "  -E, --export list        list available export formats\n" \
