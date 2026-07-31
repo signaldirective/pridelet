@@ -1,0 +1,10 @@
+
+FIGlet features that we are still missing:
+ - vertical smushing - completed on July 29, 2026
+ - word wrapping - completed on July 21, 2026 by signaldirective
+ - control files - completed on July 29, 2026
+ - justification - completed on July 21, 2026 by signaldirective
+ - -p/-n newline handling - completed on July 29, 2026
+ - -m layoutmode - completed on July 29, 2026
+ - RL support - completed on July 29, 2026
+
