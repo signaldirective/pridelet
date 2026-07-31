@@ -104,7 +104,7 @@ static void apply_justify(context_t *cx)
  * libcaca does, including the ".tlf" and ".flf" suffixes. */
 static FILE *open_font(context_t *cx)
 {
-    char base[1024];
+    char base[2048];
     char path[2048];
     char const *candidates[3];
     int n, i;
